@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!-- saved from url=(0180)https://www.exchangerates.org.uk/widget/ER-LRTICKER.php?w=960&s=1&mc=GBP&mbg=FFFFFF&bs=no&bc=FFFFFF&f=verdana&fs=10px&fc=000044&lc=036EB4&lhc=06aee5&vc=06AEE5&vcu=008000&vcd=ff0000 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Live Rates Ticker</title>
+<script type="text/javascript" src="./jquery.min.js.download"></script>
+
+<script type="text/javascript">
+
+/**
+ * Horizontal Stock Ticker for jQuery.
+ *
+ * @package jStockTicker
+ * @author Peter Halasz <skinner@gmail.com>
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL v3.0
+ * @copyright (c) 2009, Peter Halasz all rights reserved.
+ */
+( function($) {
+
+	$.fn.jStockTicker = function(options) {
+
+		if (typeof (options) == 'undefined') {
+			options = {};
+		}
+
+		var settings = $.extend( {}, $.fn.jStockTicker.defaults, options);
+
+		var $ticker = $(this);
+
+		settings.tickerID = $ticker[0].id;
+
+		$.fn.jStockTicker.settings[settings.tickerID] = {};
+
+		var $wrap = null;
+
+		if ($ticker.parent().get(0).className != 'wrap') {
+			$wrap = $ticker.wrap("<div class='wrap'></div>");
+		}
+
+		var $tickerContainer = null;
+
+		if ($ticker.parent().parent().get(0).className != 'container') {
+			$tickerContainer = $ticker.parent().wrap(
+					"<div class='container'></div>");
+		}
+
+		var node = $ticker[0].firstChild;
+		var next;
+
+		while(node) {
+			next = node.nextSibling;
+			if(node.nodeType == 3) {
+				$ticker[0].removeChild(node);
+			}
+			node = next;
+		}
+
+		var shiftLeftAt = $($ticker.children().get(0)).outerWidth(true);
+
+		$.fn.jStockTicker.settings[settings.tickerID].shiftLeftAt = shiftLeftAt;
+		$.fn.jStockTicker.settings[settings.tickerID].left = 0;
+		$.fn.jStockTicker.settings[settings.tickerID].runid = null;
+
+		$ticker.width(2 * screen.availWidth);
+
+		function startTicker() {
+			stopTicker();
+
+			var params = $.fn.jStockTicker.settings[settings.tickerID];
+			params.left -= settings.speed;
+			if(params.left <= params.shiftLeftAt * -1) {
+				params.left = 0;
+				$ticker.append($ticker.children().get(0));
+				params.shiftLeftAt = $($ticker.children().get(0)).outerWidth(true);
+			}
+
+			$ticker.css('left', params.left + 'px');
+			params.runId = setTimeout(arguments.callee, settings.interval);
+
+			$.fn.jStockTicker.settings[settings.tickerID] = params;
+		}
+
+		function stopTicker() {
+			var params = $.fn.jStockTicker.settings[settings.tickerID];
+			if (params.runId)
+			    clearTimeout(params.runId);
+
+			params.runId = null;
+
+			$.fn.jStockTicker.settings[settings.tickerID] = params;
+		}
+
+		function updateTicker() {
+
+			stopTicker();
+			startTicker();
+		}
+
+		$ticker.hover(stopTicker,startTicker);
+
+		startTicker();
+	};
+
+	$.fn.jStockTicker.settings = {};
+
+	$.fn.jStockTicker.defaults = {
+		tickerID :null,
+		url :null,
+		speed :1,
+		interval :20
+	};
+})(jQuery);
+
+    $(function() {
+        $("#ticker").jStockTicker({interval: 45,speed:1});
+    });
+</script>
+<style type="text/css" media="all">
+@CHARSET "UTF-8";
+
+.container {
+    background: #FFFFFF;
+    height: 28px;
+    margin: 0;
+    width: 958px;
+}
+
+.container .wrap {
+    width: 933px;
+    left: 10px;
+    top: 8px;
+    overflow: hidden;
+    position: relative;
+    line-height: normal;
+    font-size-adjust: none;
+}
+
+div.liveTicker {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    color: #000;
+}
+
+div.liveTicker span {
+    padding: 0 10px 0;
+}
+
+div.liveTicker span.value {
+    padding-left: 2px;
+    color: #06AEE5;
+
+}
+
+div.liveTicker span.valueup {
+    padding-left: 2px;
+    color: #008000;
+
+}
+
+div.liveTicker span.valuedown {
+    padding-left: 2px;
+    color: #ff0000;
+}
+
+
+div.liveTicker span.eq {
+    margin: 0;
+    padding-left: 10px;
+}
+
+div.liveTicker span.quote {
+    margin: 0;
+    font-weight: bold;
+    padding-left: 5px;
+    color: #000044;
+
+}
+
+a, a:visited {color:#036EB4;text-decoration:none;}
+a:hover {color:#06aee5;text-decoration:none;}
+
+body {
+	font-family: verdana;
+	font-size: 10px;
+	color: #000044;
+}
+
+#ticker span{white-space:nowrap}
+
+@CHARSET "UTF-8";
+
+
+
+</style>
+</head>
+
+<body marginwidth="0" marginheight="0">
+
+<div class="container"><div class="wrap"><div id="ticker" class="liveTicker" style="width: 3502px; left: -90px;"><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Nicaragua-Cordoba-currency-conversion-page.html" target="_top">GBP/NIO</a> = <span class="valueup">48.44046 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Norwegian-Krone-currency-conversion-page.html" target="_top">GBP/NOK</a> = <span class="valueup">11.84722 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Nepalese-Rupees-currency-conversion-page.html" target="_top">GBP/NPR</a> = <span class="valueup">160.86129 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-New-Zealand-Dollars-currency-conversion-page.html" target="_top">GBP/NZD</a> = <span class="valueup">1.93484 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Omani-Rial-currency-conversion-page.html" target="_top">GBP/OMR</a> = <span class="valuedown">0.53305 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Panamanian-Balboa-currency-conversion-page.html" target="_top">GBP/PAB</a> = <span class="valueup">1.3864 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Peruvian-Nuevo-Sol-currency-conversion-page.html" target="_top">GBP/PEN</a> = <span class="valueup">5.14436 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Papua-New-Guinea-Kina-currency-conversion-page.html" target="_top">GBP/PGK</a> = <span class="valueup">4.8966 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Philippine-Pesos-currency-conversion-page.html" target="_top">GBP/PHP</a> = <span class="valueup">67.30101 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Pakistani-Rupees-currency-conversion-page.html" target="_top">GBP/PKR</a> = <span class="valueup">216.08798 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Polish-Zloty-currency-conversion-page.html" target="_top">GBP/PLN</a> = <span class="valuedown">5.37351 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Paraguayan-Guarani-currency-conversion-page.html" target="_top">GBP/PYG</a> = <span class="valueup">9082.38262 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Qatari-Riyal-currency-conversion-page.html" target="_top">GBP/QAR</a> = <span class="valueup">5.05418 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Romanian-Leu-currency-conversion-page.html" target="_top">GBP/RON</a> = <span class="valueup">5.69215 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Russian-Roubles-currency-conversion-page.html" target="_top">GBP/RUB</a> = <span class="valueup">103.35828 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Rwanda-Franc-currency-conversion-page.html" target="_top">GBP/RWF</a> = <span class="valueup">1379.68935 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Saudi-Riyal-currency-conversion-page.html" target="_top">GBP/SAR</a> = <span class="valueup">5.20026 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Solomon-Islands-Dollar-currency-conversion-page.html" target="_top">GBP/SBD</a> = <span class="valueup">11.02598 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Seychelles-Rupee-currency-conversion-page.html" target="_top">GBP/SCR</a> = <span class="valuedown">29.39862 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Swedish-Krona-currency-conversion-page.html" target="_top">GBP/SEK</a> = <span class="valueup">11.84537 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Singapore-Dollars-currency-conversion-page.html" target="_top">GBP/SGD</a> = <span class="valuedown">1.85876 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Sierra-Leone-Leone-currency-conversion-page.html" target="_top">GBP/SLL</a> = <span class="valueup">14179.34757 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-El-Salvador-Colon-currency-conversion-page.html" target="_top">GBP/SVC</a> = <span class="valueup">12.14609 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Swaziland-Lilageni-currency-conversion-page.html" target="_top">GBP/SZL</a> = <span class="valueup">20.39009 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Baht-currency-conversion-page.html" target="_top">GBP/THB</a> = <span class="valueup">42.86752 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Tunisian-Dinar-currency-conversion-page.html" target="_top">GBP/TND</a> = <span class="valueup">3.81052 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Tonga-Paanga-currency-conversion-page.html" target="_top">GBP/TOP</a> = <span class="valueup">3.14853 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Lira-currency-conversion-page.html" target="_top">GBP/TRY</a> = <span class="valueup">10.93635 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Trinidad-Tobago-Dollar-currency-conversion-page.html" target="_top">GBP/TTD</a> = <span class="valueup">9.42244 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Taiwan-Dollar-currency-conversion-page.html" target="_top">GBP/TWD</a> = <span class="valueup">39.4133 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Tanzanian-Shilling-currency-conversion-page.html" target="_top">GBP/TZS</a> = <span class="valueup">3219.03826 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Ukraine-Hryvnia-currency-conversion-page.html" target="_top">GBP/UAH</a> = <span class="valueup">38.49444 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Ugandan-Shilling-currency-conversion-page.html" target="_top">GBP/UGX</a> = <span class="valueup">5087.42203 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Dollars-currency-conversion-page.html" target="_top">GBP/USD</a> = <span class="valueup">1.38591 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Uruguayan-New-Peso-currency-conversion-page.html" target="_top">GBP/UYU</a> = <span class="valueup">61.47543 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Vanuatu-Vatu-currency-conversion-page.html" target="_top">GBP/VUV</a> = <span class="valueup">150.61759 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Samoa-Tala-currency-conversion-page.html" target="_top">GBP/WST</a> = <span class="valuedown">3.49011 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Central-African-CFA-Francs-currency-conversion-page.html" target="_top">GBP/XAF</a> = <span class="valueup">764.25022 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-East-Caribbean-Dollars-currency-conversion-page.html" target="_top">GBP/XCD</a> = <span class="valueup">3.74682 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-West-African-CFA-Francs-currency-conversion-page.html" target="_top">GBP/XOF</a> = <span class="valueup">764.25022 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Pacific-Franc-currency-conversion-page.html" target="_top">GBP/XPF</a> = <span class="valueup">139.03245 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Yemen-Riyal-currency-conversion-page.html" target="_top">GBP/YER</a> = <span class="valueup">347.0856 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-South-African-Rands-currency-conversion-page.html" target="_top">GBP/ZAR</a> = <span class="valuedown">20.50139 ▼</span></span><span class="quote"><i>Powered by <a href="https://www.exchangerates.org.uk/webmasters/live-currency-rates-ticker.html" target="_new">EXCHANGE RATES TICKER</a></i></span><span class="quote">British PoundExchange Rates - Top 15: </span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Euros-currency-conversion-page.html" target="_top">GBP/EUR</a> = <span class="valueup">1.16465 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Australian-Dollars-currency-conversion-page.html" target="_top">GBP/AUD</a> = <span class="valueup">1.79357 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Canadian-Dollars-currency-conversion-page.html" target="_top">GBP/CAD</a> = <span class="valuedown">1.73183 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Dollars-currency-conversion-page.html" target="_top">GBP/USD</a> = <span class="valueup">1.38591 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-New-Zealand-Dollars-currency-conversion-page.html" target="_top">GBP/NZD</a> = <span class="valueup">1.93484 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Lira-currency-conversion-page.html" target="_top">GBP/TRY</a> = <span class="valueup">10.93635 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Danish-Krone-currency-conversion-page.html" target="_top">GBP/DKK</a> = <span class="valueup">8.66363 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Dirhams-currency-conversion-page.html" target="_top">GBP/AED</a> = <span class="valueup">5.08629 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Norwegian-Krone-currency-conversion-page.html" target="_top">GBP/NOK</a> = <span class="valueup">11.84722 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Swedish-Krona-currency-conversion-page.html" target="_top">GBP/SEK</a> = <span class="valueup">11.84537 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Swiss-Francs-currency-conversion-page.html" target="_top">GBP/CHF</a> = <span class="valuedown">1.28513 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Yen-currency-conversion-page.html" target="_top">GBP/JPY</a> = <span class="valuedown">150.58189 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Hong-Kong-Dollars-currency-conversion-page.html" target="_top">GBP/HKD</a> = <span class="valueup">10.76232 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Mexican-Pesos-currency-conversion-page.html" target="_top">GBP/MXN</a> = <span class="valueup">28.73179 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Singapore-Dollars-currency-conversion-page.html" target="_top">GBP/SGD</a> = <span class="valuedown">1.85876 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-South-African-Rands-currency-conversion-page.html" target="_top">GBP/ZAR</a> = <span class="valuedown">20.50139 ▼</span></span><span class="quote">Remaining Currencies: </span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Dirhams-currency-conversion-page.html" target="_top">GBP/AED</a> = <span class="valueup">5.08629 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Albanian-Lek-currency-conversion-page.html" target="_top">GBP/ALL</a> = <span class="valueup">143.84699 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Neth-Antilles-Guilder-currency-conversion-page.html" target="_top">GBP/ANG</a> = <span class="valueup">2.49163 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Argentine-Pesos-currency-conversion-page.html" target="_top">GBP/ARS</a> = <span class="valueup">126.55388 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Australian-Dollars-currency-conversion-page.html" target="_top">GBP/AUD</a> = <span class="valueup">1.79357 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Aruba-Florin-currency-conversion-page.html" target="_top">GBP/AWG</a> = <span class="valueup">2.49552 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Barbadian-Dollars-currency-conversion-page.html" target="_top">GBP/BBD</a> = <span class="valueup">2.7728 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Bangladesh-Taka-currency-conversion-page.html" target="_top">GBP/BDT</a> = <span class="valueup">117.50403 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Bulgarian-Lev-currency-conversion-page.html" target="_top">GBP/BGN</a> = <span class="valueup">2.28179 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Bahraini-Dinars-currency-conversion-page.html" target="_top">GBP/BHD</a> = <span class="valueup">0.52276 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Burundi-Franc-currency-conversion-page.html" target="_top">GBP/BIF</a> = <span class="valueup">2701.6347 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Bermuda-Dollar-currency-conversion-page.html" target="_top">GBP/BMD</a> = <span class="valueup">1.3864 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Brunei-Dollar-currency-conversion-page.html" target="_top">GBP/BND</a> = <span class="valueup">1.86239 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Bolivian-Boliviano-currency-conversion-page.html" target="_top">GBP/BOB</a> = <span class="valueup">9.59194 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Brazilian-Reals-currency-conversion-page.html" target="_top">GBP/BRL</a> = <span class="valueup">7.61065 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Bahamian-Dollar-currency-conversion-page.html" target="_top">GBP/BSD</a> = <span class="valueup">1.3864 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Bhutan-Ngultrum-currency-conversion-page.html" target="_top">GBP/BTN</a> = <span class="valueup">100.54521 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Belize-Dollar-currency-conversion-page.html" target="_top">GBP/BZD</a> = <span class="valueup">2.78315 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Canadian-Dollars-currency-conversion-page.html" target="_top">GBP/CAD</a> = <span class="valuedown">1.73183 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Swiss-Francs-currency-conversion-page.html" target="_top">GBP/CHF</a> = <span class="valuedown">1.28513 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Chilean-Pesos-currency-conversion-page.html" target="_top">GBP/CLP</a> = <span class="valueup">988.91977 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Yuan-currency-conversion-page.html" target="_top">GBP/CNY</a> = <span class="valueup">9.02123 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Colombian-Peso-currency-conversion-page.html" target="_top">GBP/COP</a> = <span class="valueup">4920.4069 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Costa-Rica-Colon-currency-conversion-page.html" target="_top">GBP/CRC</a> = <span class="valueup">848.22214 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Czech-Koruna-currency-conversion-page.html" target="_top">GBP/CZK</a> = <span class="valueup">30.39633 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Danish-Krone-currency-conversion-page.html" target="_top">GBP/DKK</a> = <span class="valueup">8.66363 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Dominican-Peso-currency-conversion-page.html" target="_top">GBP/DOP</a> = <span class="valueup">79.1656 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Algerian-Dinar-currency-conversion-page.html" target="_top">GBP/DZD</a> = <span class="valuedown">185.02554 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Egyptian-Pounds-currency-conversion-page.html" target="_top">GBP/EGP</a> = <span class="valueup">21.7927 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Ethiopian-Birr-currency-conversion-page.html" target="_top">GBP/ETB</a> = <span class="valueup">57.30669 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Euros-currency-conversion-page.html" target="_top">GBP/EUR</a> = <span class="valueup">1.16465 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Fiji-Dollar-currency-conversion-page.html" target="_top">GBP/FJD</a> = <span class="valueup">2.82486 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Gambian-Dalasi-currency-conversion-page.html" target="_top">GBP/GMD</a> = <span class="valueup">71.05305 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Guinea-Franc-currency-conversion-page.html" target="_top">GBP/GNF</a> = <span class="valueup">13948.53409 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Guatemala-Quetzal-currency-conversion-page.html" target="_top">GBP/GTQ</a> = <span class="valueup">10.71626 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Hong-Kong-Dollars-currency-conversion-page.html" target="_top">GBP/HKD</a> = <span class="valueup">10.76232 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Honduras-Lempira-currency-conversion-page.html" target="_top">GBP/HNL</a> = <span class="valueup">33.48109 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Croatian-Kuna-currency-conversion-page.html" target="_top">GBP/HRK</a> = <span class="valueup">8.82652 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Haiti-Gourde-currency-conversion-page.html" target="_top">GBP/HTG</a> = <span class="valueup">109.53433 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Hungarian-Forint-currency-conversion-page.html" target="_top">GBP/HUF</a> = <span class="valuedown">428.05025 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Indonesian-Rupiah-currency-conversion-page.html" target="_top">GBP/IDR</a> = <span class="valueup">19985.66461 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Israeli-Sheqel-currency-conversion-page.html" target="_top">GBP/ILS</a> = <span class="valueup">4.57752 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Rupees-currency-conversion-page.html" target="_top">GBP/INR</a> = <span class="valueup">100.33801 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Iraqi-Dinar-currency-conversion-page.html" target="_top">GBP/IQD</a> = <span class="valueup">2025.0215 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Iran-Rial-currency-conversion-page.html" target="_top">GBP/IRR</a> = <span class="valueup">58374.41702 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Icelandic-Krona-currency-conversion-page.html" target="_top">GBP/ISK</a> = <span class="valuedown">175.92043 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Jamaican-Dollars-currency-conversion-page.html" target="_top">GBP/JMD</a> = <span class="valueup">202.10231 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Jordanian-Dinars-currency-conversion-page.html" target="_top">GBP/JOD</a> = <span class="valueup">0.98296 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Yen-currency-conversion-page.html" target="_top">GBP/JPY</a> = <span class="valuedown">150.58189 ▼</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Kenyan-Shillings-currency-conversion-page.html" target="_top">GBP/KES</a> = <span class="valueup">152.29616 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Comoros-Franc-currency-conversion-page.html" target="_top">GBP/KMF</a> = <span class="valueup">573.3115 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-South-Korean-Won-currency-conversion-page.html" target="_top">GBP/KRW</a> = <span class="valueup">1565.25841 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Kuwaiti-Dinar-currency-conversion-page.html" target="_top">GBP/KWD</a> = <span class="valueup">0.41886 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Cayman-Islands-Dollar-currency-conversion-page.html" target="_top">GBP/KYD</a> = <span class="valueup">1.15675 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Kazakhstan-Tenge-currency-conversion-page.html" target="_top">GBP/KZT</a> = <span class="valueup">584.39374 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Lebanese-Pounds-currency-conversion-page.html" target="_top">GBP/LBP</a> = <span class="valueup">2099.08561 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Sri-Lankan-Rupees-currency-conversion-page.html" target="_top">GBP/LKR</a> = <span class="valueup">274.15286 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Lesotho-Loti-currency-conversion-page.html" target="_top">GBP/LSL</a> = <span class="valueup">20.38974 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Moroccan-Dirhams-currency-conversion-page.html" target="_top">GBP/MAD</a> = <span class="valueup">12.46398 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Moldovan-Leu-currency-conversion-page.html" target="_top">GBP/MDL</a> = <span class="valueup">24.71095 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Macedonian-Denar-currency-conversion-page.html" target="_top">GBP/MKD</a> = <span class="valueup">71.85415 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Mongolian-Tugrik-currency-conversion-page.html" target="_top">GBP/MNT</a> = <span class="valueup">3944.59875 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Macau-Pataca-currency-conversion-page.html" target="_top">GBP/MOP</a> = <span class="valueup">11.10378 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Mauritania-Ougulya-currency-conversion-page.html" target="_top">GBP/MRO</a> = <span class="valueup">494.94494 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Mauritius-Rupee-currency-conversion-page.html" target="_top">GBP/MUR</a> = <span class="valueup">55.87196 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Maldives-Rufiyaa-currency-conversion-page.html" target="_top">GBP/MVR</a> = <span class="valueup">21.43376 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Malawi-Kwacha-currency-conversion-page.html" target="_top">GBP/MWK</a> = <span class="valueup">1080.57929 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Mexican-Pesos-currency-conversion-page.html" target="_top">GBP/MXN</a> = <span class="valueup">28.73179 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Malaysian-Ringgit-currency-conversion-page.html" target="_top">GBP/MYR</a> = <span class="valueup">5.70088 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Namibian-Dollars-currency-conversion-page.html" target="_top">GBP/NAD</a> = <span class="valueup">20.39396 ▲</span></span><span class="quote"><a href="https://www.exchangerates.org.uk/Pounds-to-Nigerian-Naira-currency-conversion-page.html" target="_top">GBP/NGN</a> = <span class="valuedown">528.56541 ▼</span></span></div></div></div>
+
+</body></html>

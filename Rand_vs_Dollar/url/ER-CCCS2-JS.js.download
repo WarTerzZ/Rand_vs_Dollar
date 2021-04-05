@@ -1,0 +1,74 @@
+//Browser Support Code
+function ajaxFunction() {
+  var ajaxRequest;  // The variable that makes Ajax possible!
+
+  try {
+    // Opera 8.0+, Firefox, Safari
+    ajaxRequest = new XMLHttpRequest();
+  } catch (e) {
+    // Internet Explorer Browsers
+    try {
+      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+      try {
+        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch (e) {
+        // Something went wrong
+        alert("Your browser broke!");
+        return false;
+      }
+    }
+  }
+  // Create a function that will receive data sent from the server
+  ajaxRequest.onreadystatechange = function () {
+    if (ajaxRequest.readyState == 4) {
+      var ajaxDisplay = document.getElementById('answer');
+      ajaxDisplay.innerHTML = ajaxRequest.responseText;
+      //document.myForm.answer.value = ajaxRequest.responseText;
+      //var ajaxDisplay = document.getElementById('ajaxDiv');
+      //ajaxDisplay.innerHTML = ajaxRequest.responseText;
+    }
+  }
+  var ConvertTo = document.getElementById('ConvertTo').value;
+  var ConvertFrom = document.getElementById('ConvertFrom').value;
+  var amount = document.getElementById('amount') ? document.getElementById('amount').value : document.getElementById('amount_div').innerText;
+  var queryString = "?ConvertTo=" + ConvertTo + "&ConvertFrom=" + ConvertFrom + "&amount=" + amount;
+  ajaxRequest.open("GET", "https://www.currency.me.uk/remote/ER-CCCS2-AJAX.php" + queryString, true);
+  ajaxRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  ajaxRequest.send(null);
+}
+
+function ajaxFunction2(offset, i, n) {
+  var ajaxRequest2;  // The variable that makes Ajax possible!
+
+  try {
+    // Opera 8.0+, Firefox, Safari
+    ajaxRequest2 = new XMLHttpRequest();
+  } catch (e) {
+    // Internet Explorer Browsers
+    try {
+      ajaxRequest2 = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+      try {
+        ajaxRequest2 = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch (e) {
+        // Something went wrong
+        alert("Your browser broke!");
+        return false;
+      }
+    }
+  }
+  // Create a function that will receive data sent from the server
+  ajaxRequest2.onreadystatechange = function () {
+    if (ajaxRequest2.readyState == 4) {
+      var ajaxDisplay = document.getElementById('updated');
+      ajaxDisplay.innerHTML = ajaxRequest2.responseText;
+      //alert(ajaxRequest2.responseText);
+    }
+  }
+
+  var queryString = "?os=" + offset + "&i=" + i + "&n=" + n;
+  ajaxRequest2.open("GET", "https://www.currency.me.uk/remote/ER-CCCS2-AJAX.php" + queryString, true);
+  ajaxRequest2.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  ajaxRequest2.send(null);
+}

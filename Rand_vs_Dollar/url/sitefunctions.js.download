@@ -1,0 +1,25 @@
+function bookmarksite(title,url){
+if (window.sidebar) // firefox
+	window.sidebar.addPanel(title, url, "");
+else if(window.opera && window.print){ // opera
+	var elem = document.createElement('a');
+	elem.setAttribute('href',url);
+	elem.setAttribute('title',title);
+	elem.setAttribute('rel','sidebar');
+	elem.click();
+} 
+else if(document.all)// ie
+	window.external.AddFavorite(url, title);
+}
+
+function toggle(objId, togId) {
+	  var o = document.getElementById(objId), t = document.getElementById(togId);
+	  if (o.style.display == 'none') {
+	    o.style.display = 'block';
+	    t.innerHTML = '<a href="#"><b>Hide</b></a>';
+	  } else {
+	    o.style.display = 'none';
+	    t.innerHTML = '<a href="#"><b>Read</b></a>';
+	  }
+}
+
